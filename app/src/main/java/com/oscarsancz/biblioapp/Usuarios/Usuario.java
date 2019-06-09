@@ -1,6 +1,6 @@
 package com.oscarsancz.biblioapp.Usuarios;
 
-public abstract class Usuario {
+public class Usuario {
     private int clave;
     private String nombre;
     private String apellidoP;
