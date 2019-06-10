@@ -90,4 +90,12 @@ public class Usuario extends RealmObject {
   public void setId(int id) {
     this.id = id;
   }
+
+  public String getNombreCompleto() {
+    return ((getNombre() == null || getNombre().isEmpty()) ? "Sin nombre" : getNombre())
+        + " "
+        + ((getApellidoP() == null || getApellidoP().isEmpty()) ? "" : getApellidoP())
+        + " "
+        + ((getApellidoM() == null || getApellidoM().isEmpty()) ? "" : getApellidoM());
+  }
 }
