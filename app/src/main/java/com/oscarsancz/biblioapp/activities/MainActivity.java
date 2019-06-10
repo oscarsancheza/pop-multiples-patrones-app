@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
-    setTitle(R.string.libros_prestados);
     init();
   }
 

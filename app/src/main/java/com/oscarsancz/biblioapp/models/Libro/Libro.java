@@ -9,16 +9,19 @@ public class Libro extends RealmObject {
   private String titulo;
   private String autor;
   private String editorial;
-  private String estadoLibro;
+  private int existencia;
+  private String estado;
 
   public Libro() {}
 
-  public Libro(int isbn, String titulo, String autor, String editorial, EstadoLibro estadoLibro) {
+  public Libro(
+      int isbn, String titulo, String autor, String editorial, EstadoLibro estado, int existencia) {
     this.isbn = isbn;
     this.titulo = titulo;
     this.autor = autor;
     this.editorial = editorial;
-    this.estadoLibro = estadoLibro.toString();
+    this.estado = estado.toString();
+    this.existencia = existencia;
   }
 
   public int getIsbn() {
@@ -53,11 +56,19 @@ public class Libro extends RealmObject {
     this.editorial = editorial;
   }
 
-  public EstadoLibro getEstadoLibro() {
-    return EstadoLibro.valueOf(estadoLibro);
+  public EstadoLibro getEstado() {
+    return EstadoLibro.valueOf(estado);
   }
 
-  public void setEstadoLibro(EstadoLibro estadoLibro) {
-    this.estadoLibro = estadoLibro.toString();
+  public void setEstado(EstadoLibro estado) {
+    this.estado = estado.toString();
+  }
+
+  public int getExistencia() {
+    return existencia;
+  }
+
+  public void setExistencia(int existencia) {
+    this.existencia = existencia;
   }
 }
