@@ -34,8 +34,8 @@ public class ListadoPrestamoFragment extends Fragment implements ListadoPrestamo
   @Override
   public View onCreateView(
       LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.listado_prestamo_view, null);
-
+    View view = inflater.inflate(R.layout.listado_prestamo_view, container, false);
+    getActivity().setTitle(R.string.libros_prestados);
     ButterKnife.bind(this, view);
 
     if (true) {
