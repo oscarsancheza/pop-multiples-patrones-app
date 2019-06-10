@@ -60,6 +60,15 @@ public abstract class DefaultAdapter<T> extends RecyclerView.Adapter<RecyclerVie
     layoutManager.scrollToPosition(0);
   }
 
+  public void addItems(List<T> items) {
+    int startPosition = getItemCount();
+    for (T item : items) {
+      listItems.add(item);
+    }
+    notifyItemRangeInserted(startPosition, items.size());
+    layoutManager.scrollToPosition(0);
+  }
+
   public void removeItem(T model) {
     removeItem(listItems.indexOf(model));
   }

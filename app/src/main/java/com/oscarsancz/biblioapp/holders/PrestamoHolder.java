@@ -39,6 +39,10 @@ public class PrestamoHolder extends RecyclerView.ViewHolder
   public void bind(final Usuario model, final DefaultAdapter.OnItemClickListener listener) {
     this.model = model;
 
+    nombrePersona.setText(model.getNombreCompleto());
+    tipoPersona.setText(model.getTipo().toString());
+    totalLibros.setText("Total Libros Prestados:" + model.getLibros().size());
+
     itemView.setOnClickListener(
         v -> listener.onItemClick(PrestamoHolder.this.getAdapterPosition(), model));
 
