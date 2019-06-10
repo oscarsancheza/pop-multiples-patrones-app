@@ -29,7 +29,7 @@ public class UsuarioRepository extends GenericRepository<Usuario> {
     List<Usuario> usuarios = new ArrayList<>();
     try {
       RealmResults<Usuario> results =
-          mRealm.where(Usuario.class).isNotNull("libros").isNotEmpty("libros").findAll();
+          mRealm.where(Usuario.class).isNotEmpty("libros").findAll();
       usuarios = mRealm.copyFromRealm(results);
     } catch (Exception e) {
       Log.e(TAG, e.toString());

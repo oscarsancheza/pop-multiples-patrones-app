@@ -7,6 +7,8 @@ import com.oscarsancz.biblioapp.contracts.ListadoPrestamoContract;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
 
+import java.util.List;
+
 public class ListadoPrestamosPresenter implements ListadoPrestamoContract.Presenter {
 
   private final ListadoPrestamoContract.View view;
@@ -21,5 +23,10 @@ public class ListadoPrestamosPresenter implements ListadoPrestamoContract.Presen
     mContext = context;
     this.repository = repository;
     this.view.setPresenter(this);
+  }
+
+  @Override
+  public List<Usuario> getData() {
+    return repository.getAllWithBooks();
   }
 }
