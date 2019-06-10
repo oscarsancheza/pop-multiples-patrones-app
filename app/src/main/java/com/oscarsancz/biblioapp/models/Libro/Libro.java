@@ -12,6 +12,7 @@ public class Libro extends RealmObject {
   private int existencia;
   private String estado;
 
+
   public Libro() {}
 
   public Libro(

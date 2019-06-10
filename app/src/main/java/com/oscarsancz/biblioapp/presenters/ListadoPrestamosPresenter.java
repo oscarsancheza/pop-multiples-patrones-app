@@ -25,6 +25,7 @@ public class ListadoPrestamosPresenter implements ListadoPrestamoContract.Presen
     this.view.setPresenter(this);
   }
 
+
   @Override
   public List<Usuario> getData() {
     return repository.getAllWithBooks();
