@@ -13,7 +13,7 @@ import com.oscarsancz.biblioapp.R;
 import com.oscarsancz.biblioapp.fragments.ListadoPrestamoFragment;
 import com.oscarsancz.biblioapp.helpers.ActivityUtils;
 import com.oscarsancz.biblioapp.presenters.ListadoPrestamosPresenter;
-import com.oscarsancz.biblioapp.repositories.ListadoPrestamoRepository;
+import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager(), vista, R.id.content_main, LISTADO_PRESTAMOS_TAG);
 
     ListadoPrestamosPresenter presenter =
-        new ListadoPrestamosPresenter(ListadoPrestamoRepository.getInstance(), vista, this);
+        new ListadoPrestamosPresenter(UsuarioRepository.getInstance(), vista, this);
   }
 
   @Override

@@ -8,21 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
-public class LibrosRepository {
+public class LibrosRepository extends GenericRepository<Libro> {
 
   private static LibrosRepository instance;
   private final String TAG = this.getClass().getSimpleName();
-  private Realm mRealm;
 
   private LibrosRepository() {
-    try {
-      this.mRealm = Realm.getDefaultInstance();
-    } catch (Exception e) {
-      Log.e(TAG, e.toString());
-    }
+    super();
   }
 
   public static LibrosRepository getInstance() {
@@ -30,26 +24,6 @@ public class LibrosRepository {
       instance = new LibrosRepository();
     }
     return instance;
-  }
-
-  public boolean save(RealmList<Libro> libros) {
-    try {
-      mRealm.executeTransaction((realm) -> realm.insertOrUpdate(libros));
-    } catch (Exception e) {
-      Log.e(TAG, e.toString());
-      return false;
-    }
-    return true;
-  }
-
-  public boolean save(Libro libro) {
-    try {
-      mRealm.executeTransaction((realm) -> realm.insertOrUpdate(libro));
-    } catch (Exception e) {
-      Log.e(TAG, e.toString());
-      return false;
-    }
-    return true;
   }
 
   private List<Libro> all() {
