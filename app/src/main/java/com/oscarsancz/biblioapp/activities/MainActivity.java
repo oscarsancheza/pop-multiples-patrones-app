@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.oscarsancz.biblioapp.R;
 import com.oscarsancz.biblioapp.fragments.ListadoPrestamoFragment;
 import com.oscarsancz.biblioapp.helpers.ActivityUtils;
+import com.oscarsancz.biblioapp.models.listas.InicializarBD;
 import com.oscarsancz.biblioapp.presenters.ListadoPrestamosPresenter;
 import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
 
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity
   NavigationView navigationView;
 
   private final String LISTADO_PRESTAMOS_TAG = "listadoPrestamos";
+  InicializarBD inicializarBD;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   private void init() {
+    inicializarBD = new InicializarBD();
     setSupportActionBar(toolbar);
     ActionBarDrawerToggle toggle =
         new ActionBarDrawerToggle(
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity
     int id = item.getItemId();
 
     if (id == R.id.nav_ini_sistema) {
-      // Handle the camera action
+      inicializarBD.inicializar();
     } else if (id == R.id.nav_prestar_libro) {
 
     } else if (id == R.id.nav_devolver_libro) {

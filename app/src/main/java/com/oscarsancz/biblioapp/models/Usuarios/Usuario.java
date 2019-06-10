@@ -20,13 +20,14 @@ public class Usuario extends RealmObject {
 
   public Usuario() {}
 
-  public Usuario(
+  public Usuario(int id,
       String clave,
       String nombre,
       String apellidoM,
       String apellidoP,
       TipoUsuario tipo,
       RealmList<Libro> libros) {
+    this.id = id;
     this.clave = clave;
     this.nombre = nombre;
     this.apellidoP = apellidoP;
