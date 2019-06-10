@@ -4,16 +4,17 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.oscarsancz.biblioapp.contracts.ListadoPrestamoContract;
-import com.oscarsancz.biblioapp.repositories.ListadoPrestamoRepository;
+import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
+import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
 
 public class ListadoPrestamosPresenter implements ListadoPrestamoContract.Presenter {
 
   private final ListadoPrestamoContract.View view;
-  private final ListadoPrestamoRepository repository;
+  private final UsuarioRepository repository;
   private final Context mContext;
 
   public ListadoPrestamosPresenter(
-      @NonNull ListadoPrestamoRepository repository,
+      @NonNull UsuarioRepository repository,
       @NonNull ListadoPrestamoContract.View view,
       Context context) {
     this.view = view;

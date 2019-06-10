@@ -5,7 +5,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class Libro extends RealmObject {
 
-  @PrimaryKey private int isbn;
+  @PrimaryKey private long isbn;
   private String titulo;
   private String autor;
   private String editorial;
@@ -15,7 +15,7 @@ public class Libro extends RealmObject {
   public Libro() {}
 
   public Libro(
-      int isbn, String titulo, String autor, String editorial, EstadoLibro estado, int existencia) {
+      long isbn, String titulo, String autor, String editorial, EstadoLibro estado, int existencia) {
     this.isbn = isbn;
     this.titulo = titulo;
     this.autor = autor;
@@ -24,11 +24,11 @@ public class Libro extends RealmObject {
     this.existencia = existencia;
   }
 
-  public int getIsbn() {
+  public long getIsbn() {
     return isbn;
   }
 
-  public void setIsbn(int isbn) {
+  public void setIsbn(long isbn) {
     this.isbn = isbn;
   }
 
