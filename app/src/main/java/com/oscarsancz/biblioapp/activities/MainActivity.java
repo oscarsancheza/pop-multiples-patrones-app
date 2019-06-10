@@ -1,4 +1,4 @@
-package com.oscarsancz.biblioapp;
+package com.oscarsancz.biblioapp.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -6,24 +6,20 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
+
+import com.oscarsancz.biblioapp.R;
+import com.oscarsancz.biblioapp.fragments.ListadoPrestamoFragment;
+import com.oscarsancz.biblioapp.helpers.ActivityUtils;
+import com.oscarsancz.biblioapp.presenters.ListadoPrestamosPresenter;
+import com.oscarsancz.biblioapp.repositories.ListadoPrestamoRepository;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
-
-  @BindView(R.id.contenedor_prestamos)
-  RecyclerView recyclerView;
-
-  @BindView(R.id.empty_view)
-  TextView textoEnVacio;
 
   @BindView(R.id.toolbar)
   Toolbar toolbar;
@@ -34,21 +30,15 @@ public class MainActivity extends AppCompatActivity
   @BindView(R.id.nav_view)
   NavigationView navigationView;
 
+  private final String LISTADO_PRESTAMOS_TAG = "listadoPrestamos";
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
-
+    setTitle(R.string.libros_prestados);
     init();
-
-    if (true) {
-      recyclerView.setVisibility(View.GONE);
-      textoEnVacio.setVisibility(View.VISIBLE);
-    } else {
-      recyclerView.setVisibility(View.VISIBLE);
-      textoEnVacio.setVisibility(View.GONE);
-    }
   }
 
   private void init() {
@@ -63,6 +53,14 @@ public class MainActivity extends AppCompatActivity
     drawer.addDrawerListener(toggle);
     toggle.syncState();
     navigationView.setNavigationItemSelectedListener(this);
+
+    ListadoPrestamoFragment vista = new ListadoPrestamoFragment();
+
+    ActivityUtils.replaceFragment(
+        getSupportFragmentManager(), vista, R.id.content_main, LISTADO_PRESTAMOS_TAG);
+
+    ListadoPrestamosPresenter presenter =
+        new ListadoPrestamosPresenter(ListadoPrestamoRepository.getInstance(), vista, this);
   }
 
   @Override
@@ -73,28 +71,6 @@ public class MainActivity extends AppCompatActivity
     } else {
       super.onBackPressed();
     }
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.main, menu);
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
-    }
-
-    return super.onOptionsItemSelected(item);
   }
 
   @SuppressWarnings("StatementWithEmptyBody")
