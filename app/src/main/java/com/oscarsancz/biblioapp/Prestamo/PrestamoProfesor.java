@@ -3,16 +3,19 @@ package com.oscarsancz.biblioapp.Prestamo;
 import com.oscarsancz.biblioapp.models.Libro.DisponibilidadLibro;
 import com.oscarsancz.biblioapp.models.Libro.EstadoLibro;
 import com.oscarsancz.biblioapp.models.Libro.Libro;
-import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 import com.oscarsancz.biblioapp.repositories.LibrosRepository;
 
 import io.realm.RealmList;
 
 public class PrestamoProfesor implements ComportamientoPrestamo {
-    private LibrosRepository librosRepository = LibrosRepository.getInstance();
+    private LibrosRepository librosRepository;
+
+    public PrestamoProfesor(){
+        librosRepository = LibrosRepository.getInstance();
+    }
 
     @Override
-    public void prestar(Usuario usuario, RealmList<Libro> libros) {
+    public RealmList<Libro> prestar(RealmList<Libro> libros) {
         Libro libroPrestar;
         RealmList<Libro> librosPrestar = new RealmList<>();
         for (Libro libro : libros){
@@ -29,6 +32,5 @@ public class PrestamoProfesor implements ComportamientoPrestamo {
                 librosPrestar.add(libroPrestar);
             }
         }
-        usuario.setLibros(librosPrestar);
-    }
+        return librosPrestar;    }
 }
