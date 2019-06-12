@@ -15,4 +15,6 @@
     <string name="menu_send">Configurar sistema</string>
     <string name="libros_prestados">Libros prestados</string>
     <string name="lista_vacia">No existen datos</string>
+    <string name="pantalla_cambio">Cambio tipo Usuario</string>
+
 </resources>

@@ -2,6 +2,7 @@ package com.oscarsancz.biblioapp.repositories;
 
 import android.util.Log;
 
+import com.oscarsancz.biblioapp.models.Usuarios.TipoUsuario;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 
 import java.util.ArrayList;
@@ -36,5 +37,11 @@ public class UsuarioRepository extends GenericRepository<Usuario> {
     }
 
     return usuarios;
+  }
+
+  public boolean cambiar(int id, TipoUsuario tipoUsuario) {
+    Usuario usuario = this.find(id, "id", Usuario.class);
+    usuario.setTipo(tipoUsuario);
+    return this.save(usuario);
   }
 }

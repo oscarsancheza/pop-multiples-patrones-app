@@ -2,6 +2,8 @@ package com.oscarsancz.biblioapp.repositories;
 
 import android.util.Log;
 
+import com.oscarsancz.biblioapp.models.Libro.Libro;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,4 +55,20 @@ public abstract class GenericRepository<T extends RealmObject> {
 
     return objects;
   }
+
+  public T find(int id, String searchKey,Class<T> tClass){
+    T object = null;
+    try {
+      object =
+              mRealm
+                      .where(tClass)
+                      .equalTo(searchKey, id)
+                      .findFirst();
+      object = mRealm.copyFromRealm(object);
+    } catch (Exception e) {
+      Log.e(TAG, e.toString());
+    }
+    return object;
+  }
+
 }
