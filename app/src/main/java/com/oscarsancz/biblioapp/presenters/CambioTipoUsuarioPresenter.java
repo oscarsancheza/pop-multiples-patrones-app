@@ -16,12 +16,8 @@ public class CambioTipoUsuarioPresenter implements CambioTipoUsuarioContract.Pre
     @Override
     public boolean cambioUsuario(Usuario usuario, TipoUsuario nuevoTipo) {
         boolean respuesta;
-        if (usuario.getTipo() == TipoUsuario.PROFESOR) {
-            if (nuevoTipo != TipoUsuario.PUBLICO_GENERAL) {
-                respuesta = false;
-            } else {
-                respuesta = usuarioRepository.cambiar(usuario.getId(), nuevoTipo);
-            }
+        if (usuario.getTipo() == TipoUsuario.PROFESOR && nuevoTipo != TipoUsuario.PUBLICO_GENERAL) {
+            respuesta = false;
         } else {
             respuesta = usuarioRepository.cambiar(usuario.getId(), nuevoTipo);
         }
