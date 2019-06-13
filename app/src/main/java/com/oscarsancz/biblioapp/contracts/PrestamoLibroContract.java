@@ -5,8 +5,6 @@ import com.oscarsancz.biblioapp.helpers.BaseView;
 import com.oscarsancz.biblioapp.models.Libro.Libro;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 
-import java.util.List;
-
 import io.realm.RealmList;
 
 public interface PrestamoLibroContract {
