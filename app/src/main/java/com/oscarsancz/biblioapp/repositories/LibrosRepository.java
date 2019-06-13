@@ -2,12 +2,13 @@ package com.oscarsancz.biblioapp.repositories;
 
 import android.util.Log;
 
+import com.oscarsancz.biblioapp.models.Libro.DisponibilidadLibro;
+import com.oscarsancz.biblioapp.models.Libro.EstadoLibro;
 import com.oscarsancz.biblioapp.models.Libro.Libro;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class LibrosRepository extends GenericRepository<Libro> {
@@ -37,5 +38,23 @@ public class LibrosRepository extends GenericRepository<Libro> {
     }
 
     return libros;
+  }
+
+  private Libro find(Long isbn, EstadoLibro estadoLibro, DisponibilidadLibro disponibilidadLibro) {
+    Libro libro = null;
+    try {
+      libro =
+          mRealm
+              .where(Libro.class)
+              .equalTo("isbn", isbn)
+              .equalTo("estado", estadoLibro.toString())
+              .equalTo("status", disponibilidadLibro.toString())
+              .findFirst();
+      libro = mRealm.copyFromRealm(libro);
+    } catch (Exception e) {
+      Log.e(TAG, e.toString());
+    }
+
+    return libro;
   }
 }
