@@ -6,13 +6,9 @@
     android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="pantalla prestamo"
-        android:textSize="18dp"
-        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prestar"/>
 
 </LinearLayout>

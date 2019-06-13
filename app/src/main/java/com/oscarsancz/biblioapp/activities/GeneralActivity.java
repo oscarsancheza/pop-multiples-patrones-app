@@ -1,12 +1,12 @@
 package com.oscarsancz.biblioapp.activities;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import com.oscarsancz.biblioapp.fragmentFactory;
 import com.oscarsancz.biblioapp.R;
+import com.oscarsancz.biblioapp.fragmentFactory;
 import com.oscarsancz.biblioapp.helpers.ActivityUtils;
 import com.oscarsancz.biblioapp.models.TipoPantalla;
 
