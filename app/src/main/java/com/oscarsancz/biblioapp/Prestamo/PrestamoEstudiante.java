@@ -24,14 +24,18 @@ public class PrestamoEstudiante implements ComportamientoPrestamo {
                 libroPrestar = librosRepository.find(libro.getIsbn(), EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
                 if (libroPrestar == null) {
                     libroPrestar = librosRepository.find(libro.getIsbn(), EstadoLibro.VIEJO, DisponibilidadLibro.DISPONIBLE);
+                    libroPrestar.setStatus(DisponibilidadLibro.PRESTADO);
                     librosPrestar.add(libroPrestar);
                 } else {
+                    libroPrestar.setStatus(DisponibilidadLibro.PRESTADO);
                     librosPrestar.add(libroPrestar);
                 }
             } else {
+                libroPrestar.setStatus(DisponibilidadLibro.PRESTADO);
                 librosPrestar.add(libroPrestar);
             }
         }
+        librosRepository.save(librosPrestar);
         return librosPrestar;
     }
 }
