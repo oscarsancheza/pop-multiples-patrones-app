@@ -56,11 +56,11 @@ public abstract class GenericRepository<T extends RealmObject> {
         return objects;
     }
 
-    public T find(Long isbn, String searchKey, Class<T> tClass) {
+    public T find(Long id, String searchKey, Class<T> tClass) {
         T object = null;
         try {
             object = mRealm.where(tClass)
-                    .equalTo(searchKey, isbn)
+                    .equalTo(searchKey, id)
                     .findFirst();
             object = mRealm.copyFromRealm(object);
         }catch (Exception e){
