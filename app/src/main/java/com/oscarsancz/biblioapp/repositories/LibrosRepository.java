@@ -40,7 +40,7 @@ public class LibrosRepository extends GenericRepository<Libro> {
     return libros;
   }
 
-  private Libro find(Long isbn, EstadoLibro estadoLibro, DisponibilidadLibro disponibilidadLibro) {
+  public Libro find(Long isbn, EstadoLibro estadoLibro, DisponibilidadLibro disponibilidadLibro) {
     Libro libro = null;
     try {
       libro =
@@ -54,7 +54,6 @@ public class LibrosRepository extends GenericRepository<Libro> {
     } catch (Exception e) {
       Log.e(TAG, e.toString());
     }
-
     return libro;
   }
 }

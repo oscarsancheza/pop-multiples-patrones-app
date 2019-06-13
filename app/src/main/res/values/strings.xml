@@ -16,4 +16,6 @@
     <string name="libros_prestados">Libros prestados</string>
     <string name="lista_vacia">No existen datos</string>
     <string name="pantalla_prestamos">Prestamos</string>
+    <string name="pantalla_cambio">Cambio tipo Usuario</string>
+    <string name="pantalla_devovler">Devolver libros</string>
 </resources>
