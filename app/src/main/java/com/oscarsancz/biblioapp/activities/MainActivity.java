@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.oscarsancz.biblioapp.R;
+import com.oscarsancz.biblioapp.fragments.DialogFragmentMultipleChoice;
 import com.oscarsancz.biblioapp.fragments.ListadoPrestamoFragment;
 import com.oscarsancz.biblioapp.helpers.ActivityUtils;
 import com.oscarsancz.biblioapp.models.TipoPantalla;
@@ -89,6 +90,9 @@ public class MainActivity extends AppCompatActivity
       ActivityUtils.createIntent(
           this, GeneralActivity.class, TITULO_PANTALLA_EXTRA, TipoPantalla.PRESTAMOS.toString());
     } else if (id == R.id.nav_devolver_libro) {
+
+      DialogFragmentMultipleChoice dialog = new DialogFragmentMultipleChoice();
+      dialog.show(getFragmentManager(), "dialogo");
 
     } else if (id == R.id.nav_cambiar_tipo_usuario) {
 

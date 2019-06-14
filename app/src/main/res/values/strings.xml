@@ -18,4 +18,5 @@
     <string name="pantalla_prestamos">Prestamos</string>
     <string name="pantalla_cambio">Cambio tipo Usuario</string>
     <string name="pantalla_devovler">Devolver libros</string>
+    <string name="pantalla_prestamo">Prestar libros</string>
 </resources>
