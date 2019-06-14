@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:divider="@android:color/darker_gray"
+    android:focusable="true"
+    android:padding="16dp"
+    android:showDividers="end"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nombre_persona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="Oscar Omar Sanchez Alvarado"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/tipo_persona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="PUBLICO GENERAL"
+            android:textSize="16sp"/>
+
+
+        <TextView
+            android:id="@+id/total_libros"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="Total libros prestados:3"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
