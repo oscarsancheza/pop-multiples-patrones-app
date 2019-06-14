@@ -1,6 +1,7 @@
 package com.oscarsancz.biblioapp.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.oscarsancz.biblioapp.R;
@@ -38,6 +40,15 @@ public class CambioTipoUsuarioFragment extends Fragment implements CambioTipoUsu
   @BindView(R.id.radio_group)
   RadioGroup radioGroup;
 
+  @BindView(R.id.estudiante_radio)
+  RadioButton estudianteRadio;
+
+  @BindView(R.id.publico_radio)
+  RadioButton publicoRadio;
+
+  @BindView(R.id.profesor_radio)
+  RadioButton maestroRadio;
+
   @SuppressLint("ValidFragment")
   public CambioTipoUsuarioFragment() {}
 
@@ -61,19 +72,39 @@ public class CambioTipoUsuarioFragment extends Fragment implements CambioTipoUsu
   }
 
   @OnClick(R.id.cambiar_tipo_btn)
-  public void cambiarTipoUsuario() {}
+  public void cambiarTipoUsuario() {
+    if (usuario != null && tipoUsuario != null) {
+      this.presenter.cambioUsuario(usuario, tipoUsuario);
+      new AlertDialog.Builder(getContext())
+          .setTitle("Atención")
+          .setPositiveButton("Aceptar", (dialogInterface, i) -> getActivity().finish())
+          .setMessage("Se realizó el cambio a " + usuario.getTipo().toString() + " con exito.")
+          .setCancelable(false)
+          .show();
+    } else {
+      mostrarMensaje("Es necesario seleccionar los campos usuario y tipo usuario.");
+    }
+  }
 
-  @OnCheckedChanged({R.id.estudiante_check, R.id.publico_check, R.id.maestro_check})
+  private void mostrarMensaje(String mensaje) {
+    new AlertDialog.Builder(getContext())
+        .setTitle("Atención")
+        .setPositiveButton("Aceptar", (dialogInterface, i) -> dialogInterface.dismiss())
+        .setMessage(mensaje)
+        .show();
+  }
+
+  @OnCheckedChanged({R.id.estudiante_radio, R.id.publico_radio, R.id.profesor_radio})
   public void onRadioButtonCheckChanged(CompoundButton button, boolean checked) {
     if (checked) {
       switch (button.getId()) {
-        case R.id.maestro_check:
+        case R.id.profesor_radio:
           tipoUsuario = TipoUsuario.PROFESOR;
           break;
-        case R.id.publico_check:
+        case R.id.publico_radio:
           tipoUsuario = TipoUsuario.PUBLICO_GENERAL;
           break;
-        case R.id.estudiante_check:
+        case R.id.estudiante_radio:
           tipoUsuario = TipoUsuario.ESTUDIANTE;
           break;
       }
@@ -89,6 +120,28 @@ public class CambioTipoUsuarioFragment extends Fragment implements CambioTipoUsu
         usuarios,
         usuario -> {
           this.usuario = usuario;
+
+          switch (usuario.getTipo()) {
+            case PROFESOR:
+              maestroRadio.setEnabled(false);
+              maestroRadio.setSelected(false);
+              maestroRadio.setChecked(false);
+              estudianteRadio.setEnabled(false);
+              estudianteRadio.setSelected(false);
+              estudianteRadio.setChecked(false);
+              break;
+            case ESTUDIANTE:
+              estudianteRadio.setEnabled(false);
+              estudianteRadio.setSelected(false);
+              estudianteRadio.setChecked(false);
+              break;
+            case PUBLICO_GENERAL:
+              publicoRadio.setEnabled(false);
+              publicoRadio.setSelected(false);
+              publicoRadio.setChecked(false);
+              break;
+          }
+          tipoUsuario = null;
           usuarioComponent.setText(usuario.getNombreCompleto());
         });
     dialog.show(getActivity().getFragmentManager(), "usuarioDialog");
@@ -97,11 +150,5 @@ public class CambioTipoUsuarioFragment extends Fragment implements CambioTipoUsu
   @Override
   public void setPresenter(CambioTipoUsuarioContract.Presenter presenter) {
     this.presenter = presenter;
-  }
-
-  private void cambioTipoUsuario() {
-    Usuario usuario = new Usuario();
-    TipoUsuario nuevoTipo = TipoUsuario.ESTUDIANTE;
-    this.presenter.cambioUsuario(usuario, nuevoTipo);
   }
 }
