@@ -1,9 +1,14 @@
 package com.oscarsancz.biblioapp.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +16,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.oscarsancz.biblioapp.R;
+import com.oscarsancz.biblioapp.adapters.DefaultAdapter;
+import com.oscarsancz.biblioapp.adapters.LibroAdapter;
 import com.oscarsancz.biblioapp.contracts.PrestamoLibroContract;
+import com.oscarsancz.biblioapp.helpers.SimpleDividerItemDecoration;
 import com.oscarsancz.biblioapp.models.Libro.Libro;
 import com.oscarsancz.biblioapp.models.SelectionKey;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
@@ -22,15 +30,25 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.RealmList;
 
 public class PrestamoLibrosFragment extends Fragment implements PrestamoLibroContract.View {
 
   @BindView(R.id.prestar_btn)
   Button prestarBtn;
 
+  @BindView(R.id.contenedor_libros)
+  RecyclerView recyclerView;
+
+  @BindView(R.id.scroll_view)
+  NestedScrollView view;
+
   private PrestamoLibroContract.Presenter presenter;
   private List<SelectionKey> selectionKeys;
   private Usuario usuario;
+  private RecyclerView.LayoutManager layoutManager;
+  private LibroAdapter adapter;
+  private List<Libro> libros = new ArrayList<>();
 
   @BindView(R.id.usuario_component)
   EditText usuarioComponent;
@@ -54,7 +72,50 @@ public class PrestamoLibrosFragment extends Fragment implements PrestamoLibroCon
           }
         });
 
+    initRecyclerView();
+
     return view;
+  }
+
+  private void initRecyclerView() {
+    layoutManager = new LinearLayoutManager(getContext());
+    adapter = new LibroAdapter(getContext(), layoutManager, recyclerView);
+
+    recyclerView.setLayoutManager(layoutManager);
+    recyclerView.setAdapter(adapter);
+    recyclerView.setItemAnimator(new DefaultItemAnimator());
+    recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
+
+    adapter.addOnItemClickListener(
+        new DefaultAdapter.OnItemClickListener() {
+          @Override
+          public void onItemClick(int position, Object model) {}
+
+          @Override
+          public boolean onItemLongClick(int position, Object model) {
+            return false;
+          }
+        });
+  }
+
+  @OnClick(R.id.prestar_btn)
+  public void prestarAccion() {
+    if (usuario != null && adapter != null && !adapter.getItems().isEmpty()) {
+      RealmList<Libro> librosPrestar = new RealmList<>();
+      librosPrestar.addAll(adapter.getItems());
+      usuario.setLibros(librosPrestar);
+      presenter.cambiarEstatusLibro(librosPrestar);
+      presenter.prestar(usuario);
+      new AlertDialog.Builder(getContext())
+          .setTitle("Atención")
+          .setPositiveButton("Aceptar", (dialogInterface, i) -> getActivity().finish())
+          .setMessage("Se realizó el prestamo con éxito.")
+          .setCancelable(false)
+          .show();
+
+    } else {
+      mostrarMensaje("los campos usaurio y libros son obligatorios");
+    }
   }
 
   @OnClick(R.id.usuario_component)
@@ -73,15 +134,52 @@ public class PrestamoLibrosFragment extends Fragment implements PrestamoLibroCon
 
   @OnClick(R.id.libro_component)
   public void libroComponent() {
-    if (selectionKeys == null || selectionKeys.isEmpty()) {
-      List<Libro> libros = presenter.getLibros();
-      selectionKeys = crearList(libros);
+    if (usuario != null) {
+
+      if (selectionKeys == null || selectionKeys.isEmpty()) {
+        libros = presenter.getLibros();
+        selectionKeys = crearList(libros);
+      }
+
+      DialogFragmentMultipleChoice dialog = new DialogFragmentMultipleChoice();
+      dialog.setItems(
+          selectionKeys,
+          items -> {
+            if (adapter.getItems().size() > 0) {
+              adapter.removeAll();
+            }
+            RealmList<Libro> librosList = getLibrosFromSelectedKey(selectionKeys, this.libros);
+            List<Libro> librosPrestar = presenter.librosPrestar(usuario, librosList);
+            adapter.addItems(librosPrestar);
+          });
+
+      dialog.show(getActivity().getFragmentManager(), "librosDialog");
+    } else {
+      mostrarMensaje("Es necesario seleccionar primero un usuario.");
+    }
+  }
+
+  private void mostrarMensaje(String mensaje) {
+    new AlertDialog.Builder(getContext())
+        .setTitle("Atención")
+        .setPositiveButton("Aceptar", (dialogInterface, i) -> dialogInterface.dismiss())
+        .setMessage(mensaje)
+        .show();
+  }
+
+  private RealmList<Libro> getLibrosFromSelectedKey(
+      List<SelectionKey> selectionKeys, List<Libro> librosP) {
+    RealmList<Libro> resultado = new RealmList<>();
+
+    if (selectionKeys != null && librosP != null) {
+      for (SelectionKey item : selectionKeys) {
+        if (item.isSelected()) {
+          resultado.add(librosP.get(item.getId()));
+        }
+      }
     }
 
-    DialogFragmentMultipleChoice dialog = new DialogFragmentMultipleChoice();
-    dialog.setItems(selectionKeys, items -> {});
-
-    dialog.show(getActivity().getFragmentManager(), "librosDialog");
+    return resultado;
   }
 
   private List<SelectionKey> crearList(List<Libro> libros) {

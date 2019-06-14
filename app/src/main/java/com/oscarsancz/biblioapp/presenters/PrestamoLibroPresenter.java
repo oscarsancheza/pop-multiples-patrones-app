@@ -8,6 +8,7 @@ import com.oscarsancz.biblioapp.Prestamo.PrestarEstudiante;
 import com.oscarsancz.biblioapp.Prestamo.PrestarProfesor;
 import com.oscarsancz.biblioapp.Prestamo.PrestarPublico;
 import com.oscarsancz.biblioapp.contracts.PrestamoLibroContract;
+import com.oscarsancz.biblioapp.models.Libro.DisponibilidadLibro;
 import com.oscarsancz.biblioapp.models.Libro.Libro;
 import com.oscarsancz.biblioapp.models.Usuarios.TipoUsuario;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
@@ -33,9 +34,10 @@ public class PrestamoLibroPresenter implements PrestamoLibroContract.Presenter {
   }
 
   @Override
-  public boolean prestar(Usuario usuario, RealmList<Libro> librosPrestar) {
+  public List<Libro> librosPrestar(Usuario usuario, RealmList<Libro> librosPrestar) {
     Prestar prestar;
     RealmList<Libro> libros;
+
     if (usuario.getTipo() == TipoUsuario.PROFESOR) {
       prestar = new PrestarProfesor();
       libros = prestar.crearPrestamo(librosPrestar);
@@ -46,9 +48,8 @@ public class PrestamoLibroPresenter implements PrestamoLibroContract.Presenter {
       prestar = new PrestarPublico();
       libros = prestar.crearPrestamo(librosPrestar);
     }
-    usuario.setLibros(libros);
 
-    return usuarioRepository.save(usuario);
+    return libros;
   }
 
   @Override
@@ -59,5 +60,18 @@ public class PrestamoLibroPresenter implements PrestamoLibroContract.Presenter {
   @Override
   public List<Usuario> getUsuarios() {
     return usuarioRepository.all(Usuario.class);
+  }
+
+  @Override
+  public void prestar(Usuario usuario) {
+    usuarioRepository.save(usuario);
+  }
+
+  @Override
+  public void cambiarEstatusLibro(List<Libro> libros) {
+    for (Libro item : libros) {
+      item.setStatus(DisponibilidadLibro.PRESTADO);
+      librosRepository.save(item);
+    }
   }
 }
