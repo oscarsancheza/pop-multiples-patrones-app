@@ -24,15 +24,15 @@ public class InicializarBD {
         librosRepository = LibrosRepository.getInstance();
 
 
-        Libro libro1 = new Libro(1, 12321136083238L, "Clean Code", "Robert C. Martin", "Prentice Hall", EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
+        Libro libro1 = new Libro(1, 9780132350884L, "Clean Code", "Robert C. Martin", "Prentice Hall", EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
         libros.add(libro1);
-        Libro libro2 = new Libro(2, 1491914250, "Deep Learning A practitioner's approach", "Josh Patterson & Adam Gibson ", "O'Reilly", EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
+        Libro libro2 = new Libro(2, 9781491914250L, "Deep Learning A practitioner's approach", "Josh Patterson & Adam Gibson ", "O'Reilly", EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
         libros.add(libro2);
-        Libro libro3 = new Libro(3, 470724145, "El Hobbit", "J.R.R Tolkien", "Minotauro", EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
+        Libro libro3 = new Libro(3, 9786070724145L, "El Hobbit", "J.R.R Tolkien", "Minotauro", EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
         libros.add(libro3);
         Libro libro4 = new Libro(4, 9789706438714L, "Don Quijote de la Mancha", "Miguel de Cervantes Saavedra", "Penguin Clasicos", EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
         libros.add(libro4);
-        Libro libro5 = new Libro(5, 9789706438714L, "Don Quijote de la Mancha", "Miguel de Cervantes Saavedra", "Penguin Clasicos", EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
+        Libro libro5 = new Libro(5, 9789706438714L, "Don Quijote de la Mancha", "Miguel de Cervantes Saavedra", "Penguin Clasicos", EstadoLibro.SEMI_NUEVO, DisponibilidadLibro.DISPONIBLE);
         libros.add(libro5);
 
         Usuario usuario1 = new Usuario(1, "M18170808", "Jose", "Beltran", "Valezuela", TipoUsuario.ESTUDIANTE, new RealmList<>());
