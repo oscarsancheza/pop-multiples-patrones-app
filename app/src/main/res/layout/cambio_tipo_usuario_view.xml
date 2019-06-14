@@ -31,24 +31,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:text="Nuevo tipo usuario"
-                android:textSize="14sp"/>
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/tipo_usuario_component"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:clickable="true"
-                android:src="@drawable/baseline_add_box_black_24dp"/>
+                <RadioButton
+                    android:id="@+id/maestro_check"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Maestro"/>
+
+                <RadioButton
+                    android:id="@+id/estudiante_check"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Estudiandte"/>
+
+                <RadioButton
+                    android:id="@+id/publico_check"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="público General"/>
+
+            </RadioGroup>
 
         </LinearLayout>
+
 
         <Button
             android:id="@+id/cambiar_tipo_btn"
@@ -57,6 +68,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="60dp"
             android:text="Cambiar "/>
+
 
     </LinearLayout>
 
