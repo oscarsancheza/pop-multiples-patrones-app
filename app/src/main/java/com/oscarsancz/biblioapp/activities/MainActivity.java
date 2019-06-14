@@ -90,13 +90,15 @@ public class MainActivity extends AppCompatActivity
       ActivityUtils.createIntent(
           this, GeneralActivity.class, TITULO_PANTALLA_EXTRA, TipoPantalla.PRESTAMOS.toString());
     } else if (id == R.id.nav_devolver_libro) {
-
+      ActivityUtils.createIntent(
+          this, GeneralActivity.class, TITULO_PANTALLA_EXTRA, TipoPantalla.DEVOLUCIONES.toString());
     } else if (id == R.id.nav_cambiar_tipo_usuario) {
       ActivityUtils.createIntent(
-              this, GeneralActivity.class, TITULO_PANTALLA_EXTRA, TipoPantalla.CAMBIAR_USUARIO.toString());
+          this,
+          GeneralActivity.class,
+          TITULO_PANTALLA_EXTRA,
+          TipoPantalla.CAMBIAR_USUARIO.toString());
     } else if (id == R.id.nav_libro_resurtir) {
-
-    } else if (id == R.id.nav_configuracion) {
 
     }
 
