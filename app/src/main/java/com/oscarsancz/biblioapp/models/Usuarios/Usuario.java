@@ -2,10 +2,9 @@ package com.oscarsancz.biblioapp.models.Usuarios;
 
 import com.oscarsancz.biblioapp.models.Libro.Libro;
 
-import java.util.List;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Usuario extends RealmObject {
@@ -17,10 +16,12 @@ public class Usuario extends RealmObject {
   private String apellidoM;
   private String tipo;
   private RealmList<Libro> libros;
+  @Ignore private boolean isSelected;
 
   public Usuario() {}
 
-  public Usuario(int id,
+  public Usuario(
+      int id,
       String clave,
       String nombre,
       String apellidoM,
@@ -98,5 +99,17 @@ public class Usuario extends RealmObject {
         + ((getApellidoP() == null || getApellidoP().isEmpty()) ? "" : getApellidoP())
         + " "
         + ((getApellidoM() == null || getApellidoM().isEmpty()) ? "" : getApellidoM());
+  }
+
+  public void setTipo(String tipo) {
+    this.tipo = tipo;
+  }
+
+  public boolean isSelected() {
+    return isSelected;
+  }
+
+  public void setSelected(boolean selected) {
+    isSelected = selected;
   }
 }

@@ -1,14 +1,16 @@
 package com.oscarsancz.biblioapp.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.oscarsancz.biblioapp.R;
-import com.oscarsancz.biblioapp.fragmentFactory;
+import com.oscarsancz.biblioapp.fragments.PrestamoLibrosFragment;
 import com.oscarsancz.biblioapp.helpers.ActivityUtils;
 import com.oscarsancz.biblioapp.models.TipoPantalla;
+import com.oscarsancz.biblioapp.presenters.PrestamoLibroPresenter;
+import com.oscarsancz.biblioapp.repositories.LibrosRepository;
+import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
 
 import butterknife.BindView;
 
@@ -28,8 +30,25 @@ public class GeneralActivity extends AppCompatActivity {
     tipoPantalla =
         TipoPantalla.valueOf(getIntent().getStringExtra(MainActivity.TITULO_PANTALLA_EXTRA));
 
-    Fragment fragment = fragmentFactory.crearFragment(tipoPantalla);
-    ActivityUtils.replaceFragment(
-        getSupportFragmentManager(), fragment, R.id.content_main, tipoPantalla.toString());
+    crearFragment(tipoPantalla);
+  }
+
+  private void crearFragment(TipoPantalla tipoPantalla) {
+    switch (tipoPantalla) {
+      case PRESTAMOS:
+        PrestamoLibrosFragment prestamoLibrosFragment = new PrestamoLibrosFragment();
+        PrestamoLibroPresenter presenter =
+            new PrestamoLibroPresenter(
+                UsuarioRepository.getInstance(),
+                LibrosRepository.getInstance(),
+                prestamoLibrosFragment,
+                this);
+        ActivityUtils.replaceFragment(
+            getSupportFragmentManager(),
+            prestamoLibrosFragment,
+            R.id.content_main,
+            tipoPantalla.toString());
+        break;
+    }
   }
 }

@@ -39,19 +39,15 @@ public class DialogFragmentMultipleChoice extends DialogFragment {
   private List<SelectionKey> mItems;
   private OnDismissDialogListenerMultipleSelection mListener;
   private ListViewAdapter mAdapter;
-  private boolean isComercio;
   private static final String ABARROTE = "ABARROTE";
 
   public DialogFragmentMultipleChoice() {}
 
   public void setItems(
-      List<SelectionKey> items,
-      OnDismissDialogListenerMultipleSelection listener,
-      boolean isComercio) {
+      List<SelectionKey> items, OnDismissDialogListenerMultipleSelection listener) {
 
     mListener = listener;
     mItems = items;
-    this.isComercio = isComercio;
   }
 
   @Override
@@ -84,7 +80,7 @@ public class DialogFragmentMultipleChoice extends DialogFragment {
   private void initListView() {
     if (getActivity() != null && mItems != null) {
       mLista.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-      mAdapter = new ListViewAdapter(mItems, isComercio);
+      mAdapter = new ListViewAdapter(mItems);
       mLista.setAdapter(mAdapter);
     }
   }
@@ -121,13 +117,11 @@ public class DialogFragmentMultipleChoice extends DialogFragment {
     List<SelectionKey> arrayList;
     List<SelectionKey> mOriginalValues;
     List<SelectionKey> selectedArray;
-    boolean isComercio;
 
     LayoutInflater inflater;
 
-    ListViewAdapter(List<SelectionKey> arrayList, boolean isComercio) {
+    ListViewAdapter(List<SelectionKey> arrayList) {
       this.arrayList = arrayList;
-      this.isComercio = isComercio;
       inflater = LayoutInflater.from(getActivity());
     }
 
@@ -163,8 +157,8 @@ public class DialogFragmentMultipleChoice extends DialogFragment {
       if (convertView == null) {
         holder = new ViewHolder();
         convertView = inflater.inflate(R.layout.item_listview_multiple, parent, false);
-        holder.textView = (TextView) convertView.findViewById(R.id.alertTextView);
-        holder.checkBox = (CheckBox) convertView.findViewById(R.id.alertCheckbox);
+        holder.textView = convertView.findViewById(R.id.alertTextView);
+        holder.checkBox = convertView.findViewById(R.id.alertCheckbox);
 
         convertView.setTag(holder);
       } else {
@@ -175,20 +169,12 @@ public class DialogFragmentMultipleChoice extends DialogFragment {
 
         holder.textView.setText(data.getDescripcion().trim());
         holder.checkBox.setChecked(data.isSelected());
-        if (isComercio && data.getDescripcion().equals(ABARROTE)) {
-          holder.checkBox.setChecked(true);
-          data.setSelected(true);
-        }
+
         convertView.setOnClickListener(
             v -> {
               final ViewHolder temp = (ViewHolder) v.getTag();
               temp.checkBox.setChecked(!temp.checkBox.isChecked());
               data.setSelected(!data.isSelected());
-
-              if (isComercio && data.getDescripcion().equals(ABARROTE)) {
-                temp.checkBox.setChecked(true);
-                data.setSelected(true);
-              }
 
               notifyDataSetChanged();
             });

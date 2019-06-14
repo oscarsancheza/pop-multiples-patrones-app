@@ -5,13 +5,18 @@ import com.oscarsancz.biblioapp.helpers.BaseView;
 import com.oscarsancz.biblioapp.models.Libro.Libro;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 
+import java.util.List;
+
 import io.realm.RealmList;
 
 public interface PrestamoLibroContract {
-    interface View extends BaseView<PrestamoLibroContract.Presenter> {
-    }
+  interface View extends BaseView<PrestamoLibroContract.Presenter> {}
 
-    interface Presenter extends BasePresenter {
-        boolean prestar(Usuario usuario, RealmList<Libro> librosPrestar);
-    }
+  interface Presenter extends BasePresenter {
+    boolean prestar(Usuario usuario, RealmList<Libro> librosPrestar);
+
+    List<Libro> getLibros();
+
+    List<Usuario> getUsuarios();
+  }
 }
