@@ -90,9 +90,8 @@ public class MainActivity extends AppCompatActivity
       ActivityUtils.createIntent(
           this, GeneralActivity.class, TITULO_PANTALLA_EXTRA, TipoPantalla.PRESTAMOS.toString());
     } else if (id == R.id.nav_devolver_libro) {
-
-      DialogFragmentMultipleChoice dialog = new DialogFragmentMultipleChoice();
-      dialog.show(getFragmentManager(), "dialogo");
+      ActivityUtils.createIntent(
+              this, GeneralActivity.class, TITULO_PANTALLA_EXTRA, TipoPantalla.DEVOLUCIONES.toString());
 
     } else if (id == R.id.nav_cambiar_tipo_usuario) {
 

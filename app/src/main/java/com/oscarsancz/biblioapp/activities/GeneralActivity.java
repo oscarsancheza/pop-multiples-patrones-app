@@ -5,9 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.oscarsancz.biblioapp.R;
+import com.oscarsancz.biblioapp.fragments.DevolverLibroFragment;
 import com.oscarsancz.biblioapp.fragments.PrestamoLibrosFragment;
 import com.oscarsancz.biblioapp.helpers.ActivityUtils;
 import com.oscarsancz.biblioapp.models.TipoPantalla;
+import com.oscarsancz.biblioapp.presenters.DevolverLibroPresenter;
 import com.oscarsancz.biblioapp.presenters.PrestamoLibroPresenter;
 import com.oscarsancz.biblioapp.repositories.LibrosRepository;
 import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
@@ -48,6 +50,19 @@ public class GeneralActivity extends AppCompatActivity {
             prestamoLibrosFragment,
             R.id.content_main,
             tipoPantalla.toString());
+        break;
+      case DEVOLUCIONES:
+        DevolverLibroFragment devolverLibroFragment = new DevolverLibroFragment();
+        DevolverLibroPresenter presenterDevolver =
+                new DevolverLibroPresenter(UsuarioRepository.getInstance(),
+                        LibrosRepository.getInstance(),
+                        devolverLibroFragment,
+                        this);
+        ActivityUtils.replaceFragment(
+                getSupportFragmentManager(),
+                devolverLibroFragment,
+                R.id.content_main,
+                tipoPantalla.toString());
         break;
     }
   }

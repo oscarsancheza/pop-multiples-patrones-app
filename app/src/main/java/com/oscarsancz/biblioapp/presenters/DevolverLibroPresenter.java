@@ -1,6 +1,10 @@
 package com.oscarsancz.biblioapp.presenters;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import com.oscarsancz.biblioapp.contracts.DevolverLibroContract;
+import com.oscarsancz.biblioapp.contracts.PrestamoLibroContract;
 import com.oscarsancz.biblioapp.models.Libro.DisponibilidadLibro;
 import com.oscarsancz.biblioapp.models.Libro.Libro;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
@@ -15,35 +19,32 @@ public class DevolverLibroPresenter implements DevolverLibroContract.Presenter {
     UsuarioRepository usuarioRepository;
     LibrosRepository librosRepository;
 
-    public DevolverLibroPresenter() {
-        usuarioRepository = UsuarioRepository.getInstance();
-        librosRepository = LibrosRepository.getInstance();
+    public DevolverLibroPresenter(
+            @NonNull UsuarioRepository usuarioRepository,
+            @NonNull LibrosRepository librosRepository,
+            @NonNull DevolverLibroContract.View view,
+            Context context
+    ) {
+        this.usuarioRepository = usuarioRepository;
+        this.librosRepository = librosRepository;
+        view.setPresenter(this);
     }
 
     @Override
-    public RealmList<Libro> getLibrosUsuario(int id) {
-        Usuario usuario = usuarioRepository.find(id, "id", Usuario.class);
-        return usuario.getLibros();
+    public void devolver(Usuario usuario) {
+        usuarioRepository.save(usuario);
     }
 
     @Override
-    public boolean devolverLibros(List<Libro> librosDevolver) {
-        Libro libro;
-        boolean respuesta = false;
-        for (Libro libroDevolver : librosDevolver) {
-            libro = librosRepository.find(libroDevolver.getIsbn(), "isbn", Libro.class);
-            libro.setStatus(DisponibilidadLibro.DISPONIBLE);
-            respuesta = librosRepository.save(libro);
+    public void cambiarEstatusLibro(List<Libro> libros) {
+        for (Libro item : libros) {
+            item.setStatus(DisponibilidadLibro.DISPONIBLE);
+            librosRepository.save(item);
         }
-        return respuesta;
     }
 
     @Override
-    public boolean updateLibrosUsuario(int id, RealmList<Libro> librosUsuario) {
-        boolean respuesta;
-        Usuario usuario = usuarioRepository.find(id, "id", Usuario.class);
-        usuario.setLibros(librosUsuario);
-        respuesta = usuarioRepository.save(usuario);
-        return respuesta;
+    public List<Usuario> getUsuarios() {
+        return usuarioRepository.all(Usuario.class);
     }
 }

@@ -3,6 +3,7 @@ package com.oscarsancz.biblioapp.contracts;
 import com.oscarsancz.biblioapp.helpers.BasePresenter;
 import com.oscarsancz.biblioapp.helpers.BaseView;
 import com.oscarsancz.biblioapp.models.Libro.Libro;
+import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 
 import java.util.List;
 
@@ -13,10 +14,10 @@ public interface DevolverLibroContract {
     }
 
     interface Presenter extends BasePresenter {
-        RealmList<Libro> getLibrosUsuario(int id);
+        void devolver(Usuario usuario);
 
-        boolean devolverLibros(List<Libro> librosDevolver);
+        void cambiarEstatusLibro(List<Libro> libros);
 
-        boolean updateLibrosUsuario(int id, RealmList<Libro> librosUsuario);
+        List<Usuario> getUsuarios();
     }
 }
