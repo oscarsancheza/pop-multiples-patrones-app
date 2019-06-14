@@ -8,6 +8,7 @@ import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public class UsuarioRepository extends GenericRepository<Usuario> {
@@ -26,12 +27,10 @@ public class UsuarioRepository extends GenericRepository<Usuario> {
     return instance;
   }
 
-  public List<Usuario> getAllWithBooks() {
-    List<Usuario> usuarios = new ArrayList<>();
+  public RealmResults<Usuario> getAllWithBooks() {
+    RealmResults<Usuario> usuarios = null;
     try {
-      RealmResults<Usuario> results =
-          mRealm.where(Usuario.class).isNotEmpty("libros").findAll();
-      usuarios = mRealm.copyFromRealm(results);
+      usuarios = mRealm.where(Usuario.class).isNotEmpty("libros").findAll();
     } catch (Exception e) {
       Log.e(TAG, e.toString());
     }

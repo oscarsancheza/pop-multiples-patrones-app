@@ -3,6 +3,7 @@ package com.oscarsancz.biblioapp.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.oscarsancz.biblioapp.R;
 import com.oscarsancz.biblioapp.fragments.CambioTipoUsuarioFragment;
@@ -17,65 +18,84 @@ import com.oscarsancz.biblioapp.repositories.LibrosRepository;
 import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class GeneralActivity extends AppCompatActivity {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+  @BindView(R.id.toolbar)
+  Toolbar toolbar;
 
-    private TipoPantalla tipoPantalla;
+  private TipoPantalla tipoPantalla;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_general);
-        setSupportActionBar(toolbar);
-
-        tipoPantalla =
-                TipoPantalla.valueOf(getIntent().getStringExtra(MainActivity.TITULO_PANTALLA_EXTRA));
-
-        crearFragment(tipoPantalla);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_general);
+    ButterKnife.bind(this);
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setHomeAsUpIndicator(R.drawable.baseline_close_black_24dp);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-    private void crearFragment(TipoPantalla tipoPantalla) {
-        switch (tipoPantalla) {
-            case PRESTAMOS:
-                PrestamoLibrosFragment prestamoLibrosFragment = new PrestamoLibrosFragment();
-                PrestamoLibroPresenter presenter =
-                        new PrestamoLibroPresenter(
-                                UsuarioRepository.getInstance(),
-                                LibrosRepository.getInstance(),
-                                prestamoLibrosFragment,
-                                this);
-                ActivityUtils.replaceFragment(
-                        getSupportFragmentManager(),
-                        prestamoLibrosFragment,
-                        R.id.content_main,
-                        tipoPantalla.toString());
-                break;
-            case DEVOLUCIONES:
-                DevolverLibroFragment devolverLibroFragment = new DevolverLibroFragment();
-                DevolverLibroPresenter presenterDevolver =
-                        new DevolverLibroPresenter(UsuarioRepository.getInstance(),
-                                LibrosRepository.getInstance(),
-                                devolverLibroFragment,
-                                this);
-                ActivityUtils.replaceFragment(
-                        getSupportFragmentManager(),
-                        devolverLibroFragment,
-                        R.id.content_main,
-                        tipoPantalla.toString());
-                break;
-            case CAMBIAR_USUARIO:
-                CambioTipoUsuarioFragment cambioTipoUsuarioFragment = new CambioTipoUsuarioFragment();
-                CambioTipoUsuarioPresenter presenter1 =
-                        new CambioTipoUsuarioPresenter(UsuarioRepository.getInstance(), cambioTipoUsuarioFragment, this);
-                ActivityUtils.replaceFragment(
-                        getSupportFragmentManager(),
-                        cambioTipoUsuarioFragment,
-                        R.id.content_main,
-                        tipoPantalla.toString());
-                break;
-        }
+    tipoPantalla =
+        TipoPantalla.valueOf(getIntent().getStringExtra(MainActivity.TITULO_PANTALLA_EXTRA));
+
+    crearFragment(tipoPantalla);
+  }
+
+  private void crearFragment(TipoPantalla tipoPantalla) {
+    switch (tipoPantalla) {
+      case PRESTAMOS:
+        PrestamoLibrosFragment prestamoLibrosFragment = new PrestamoLibrosFragment();
+        PrestamoLibroPresenter presenter =
+            new PrestamoLibroPresenter(
+                UsuarioRepository.getInstance(),
+                LibrosRepository.getInstance(),
+                prestamoLibrosFragment,
+                this);
+        ActivityUtils.replaceFragment(
+            getSupportFragmentManager(),
+            prestamoLibrosFragment,
+            R.id.content_main,
+            tipoPantalla.toString());
+        break;
+      case DEVOLUCIONES:
+        DevolverLibroFragment devolverLibroFragment = new DevolverLibroFragment();
+        DevolverLibroPresenter presenterDevolver =
+            new DevolverLibroPresenter(
+                UsuarioRepository.getInstance(),
+                LibrosRepository.getInstance(),
+                devolverLibroFragment,
+                this);
+        ActivityUtils.replaceFragment(
+            getSupportFragmentManager(),
+            devolverLibroFragment,
+            R.id.content_main,
+            tipoPantalla.toString());
+        break;
+      case CAMBIAR_USUARIO:
+        CambioTipoUsuarioFragment cambioTipoUsuarioFragment = new CambioTipoUsuarioFragment();
+        CambioTipoUsuarioPresenter presenter1 =
+            new CambioTipoUsuarioPresenter(
+                UsuarioRepository.getInstance(), cambioTipoUsuarioFragment, this);
+        ActivityUtils.replaceFragment(
+            getSupportFragmentManager(),
+            cambioTipoUsuarioFragment,
+            R.id.content_main,
+            tipoPantalla.toString());
+        break;
     }
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        this.finish();
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
+  }
 }
