@@ -10,9 +10,11 @@ import com.oscarsancz.biblioapp.models.Usuarios.TipoUsuario;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
 
+import java.util.Observable;
+
 import io.realm.RealmList;
 
-public class PrestamoLibroPresenter implements PrestamoLibroContract.Presenter {
+public class PrestamoLibroPresenter extends Observable implements PrestamoLibroContract.Presenter {
     private UsuarioRepository usuarioRepository;
 
     public PrestamoLibroPresenter(){
@@ -34,7 +36,12 @@ public class PrestamoLibroPresenter implements PrestamoLibroContract.Presenter {
             libros = prestar.crearPrestamo(librosPrestar);
         }
         usuario.setLibros(libros);
-
+        this.notifyObservers(libros);
         return usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public void notifyObservers(Object arg) {
+        super.notifyObservers(arg);
     }
 }
