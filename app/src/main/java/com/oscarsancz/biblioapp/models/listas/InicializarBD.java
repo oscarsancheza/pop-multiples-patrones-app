@@ -32,6 +32,8 @@ public class InicializarBD {
         libros.add(libro3);
         Libro libro4 = new Libro(4, 9789706438714L, "Don Quijote de la Mancha", "Miguel de Cervantes Saavedra", "Penguin Clasicos", EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
         libros.add(libro4);
+        Libro libro5 = new Libro(5, 9789706438714L, "Don Quijote de la Mancha", "Miguel de Cervantes Saavedra", "Penguin Clasicos", EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
+        libros.add(libro5);
 
         Usuario usuario1 = new Usuario(1, "M18170808", "Jose", "Beltran", "Valezuela", TipoUsuario.ESTUDIANTE, new RealmList<>());
         usuarios.add(usuario1);
