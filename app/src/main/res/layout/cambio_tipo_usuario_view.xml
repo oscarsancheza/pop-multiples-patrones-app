@@ -39,22 +39,22 @@
                 android:layout_height="match_parent">
 
                 <RadioButton
-                    android:id="@+id/maestro_check"
+                    android:id="@+id/profesor_radio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Maestro"/>
+                    android:text="Profesor"/>
 
                 <RadioButton
-                    android:id="@+id/estudiante_check"
+                    android:id="@+id/estudiante_radio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Estudiandte"/>
+                    android:text="Estudiante"/>
 
                 <RadioButton
-                    android:id="@+id/publico_check"
+                    android:id="@+id/publico_radio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="público General"/>
+                    android:text="Público General"/>
 
             </RadioGroup>
 
