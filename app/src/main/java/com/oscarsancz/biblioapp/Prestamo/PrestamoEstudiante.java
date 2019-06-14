@@ -10,28 +10,29 @@ import io.realm.RealmList;
 public class PrestamoEstudiante implements ComportamientoPrestamo {
     private LibrosRepository librosRepository;
 
-    public PrestamoEstudiante(){
+    public PrestamoEstudiante() {
         librosRepository = LibrosRepository.getInstance();
     }
 
     @Override
     public RealmList<Libro> prestar(RealmList<Libro> libros) {
-        Libro libroPrestar;
+        Libro libroP;
         RealmList<Libro> librosPrestar = new RealmList<>();
         for (Libro libro : libros) {
-            libroPrestar = librosRepository.find(libro.getIsbn(), EstadoLibro.SEMI_NUEVO, DisponibilidadLibro.DISPONIBLE);
-            if (libroPrestar == null) {
-                libroPrestar = librosRepository.find(libro.getIsbn(), EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
-                if (libroPrestar == null) {
-                    libroPrestar = librosRepository.find(libro.getIsbn(), EstadoLibro.VIEJO, DisponibilidadLibro.DISPONIBLE);
-                    librosPrestar.add(libroPrestar);
-                } else {
-                    librosPrestar.add(libroPrestar);
+            libroP = librosRepository.find(libro.getIsbn(), EstadoLibro.SEMI_NUEVO, DisponibilidadLibro.DISPONIBLE);
+            if (libroP == null) {
+                libroP = librosRepository.find(libro.getIsbn(), EstadoLibro.NUEVO, DisponibilidadLibro.DISPONIBLE);
+                if (libroP == null) {
+                    libroP = librosRepository.find(libro.getIsbn(), EstadoLibro.VIEJO, DisponibilidadLibro.DISPONIBLE);
                 }
-            } else {
-                librosPrestar.add(libroPrestar);
+            }
+
+            if (libroP != null) {
+                libroP.setStatus(DisponibilidadLibro.PRESTADO);
+                librosPrestar.add(libroP);
             }
         }
+        librosRepository.save(librosPrestar);
         return librosPrestar;
     }
 }
