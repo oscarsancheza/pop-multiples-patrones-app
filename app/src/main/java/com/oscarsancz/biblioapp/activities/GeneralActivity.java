@@ -5,9 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.oscarsancz.biblioapp.R;
+import com.oscarsancz.biblioapp.fragments.CambioTipoUsuarioFragment;
 import com.oscarsancz.biblioapp.fragments.PrestamoLibrosFragment;
 import com.oscarsancz.biblioapp.helpers.ActivityUtils;
 import com.oscarsancz.biblioapp.models.TipoPantalla;
+import com.oscarsancz.biblioapp.presenters.CambioTipoUsuarioPresenter;
 import com.oscarsancz.biblioapp.presenters.PrestamoLibroPresenter;
 import com.oscarsancz.biblioapp.repositories.LibrosRepository;
 import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
@@ -48,6 +50,16 @@ public class GeneralActivity extends AppCompatActivity {
             prestamoLibrosFragment,
             R.id.content_main,
             tipoPantalla.toString());
+        break;
+      case CAMBIAR_USUARIO:
+        CambioTipoUsuarioFragment cambioTipoUsuarioFragment = new CambioTipoUsuarioFragment();
+        CambioTipoUsuarioPresenter presenter1 =
+          new CambioTipoUsuarioPresenter(UsuarioRepository.getInstance(), cambioTipoUsuarioFragment, this);
+        ActivityUtils.replaceFragment(
+                getSupportFragmentManager(),
+                cambioTipoUsuarioFragment,
+                R.id.content_main,
+                tipoPantalla.toString());
         break;
     }
   }
