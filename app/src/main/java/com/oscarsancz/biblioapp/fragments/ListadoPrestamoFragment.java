@@ -33,6 +33,7 @@ public class ListadoPrestamoFragment extends Fragment implements ListadoPrestamo
   @BindView(R.id.empty_view)
   TextView textoEnVacio;
 
+
   private ListadoPrestamoContract.Presenter presenter;
   private RecyclerView.LayoutManager layoutManager;
   private PrestamosAdapter adapter;

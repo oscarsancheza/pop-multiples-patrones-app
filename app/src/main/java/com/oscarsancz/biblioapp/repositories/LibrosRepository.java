@@ -9,7 +9,6 @@ import com.oscarsancz.biblioapp.models.Libro.Libro;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class LibrosRepository extends GenericRepository<Libro> {
@@ -28,11 +27,15 @@ public class LibrosRepository extends GenericRepository<Libro> {
     return instance;
   }
 
-  private List<Libro> all() {
+  public List<Libro> all() {
     List<Libro> libros = new ArrayList<>();
     try {
       RealmResults<Libro> results =
-          mRealm.where(Libro.class).greaterThan("existencia", 0).findAll();
+          mRealm
+              .where(Libro.class)
+              .equalTo("status", DisponibilidadLibro.DISPONIBLE.toString())
+              .distinct("isbn")
+              .findAll();
       libros = mRealm.copyFromRealm(results);
     } catch (Exception e) {
       Log.e(TAG, e.toString());
@@ -58,12 +61,12 @@ public class LibrosRepository extends GenericRepository<Libro> {
     Libro libro = null;
     try {
       libro =
-              mRealm
-                      .where(Libro.class)
-                      .equalTo("isbn", isbn)
-                      .equalTo("estado", estadoLibro.toString())
-                      .equalTo("status", disponibilidadLibro.toString())
-                      .findFirst();
+          mRealm
+              .where(Libro.class)
+              .equalTo("isbn", isbn)
+              .equalTo("estado", estadoLibro.toString())
+              .equalTo("status", disponibilidadLibro.toString())
+              .findFirst();
       libro = mRealm.copyFromRealm(libro);
     } catch (Exception e) {
       Log.e(TAG, e.toString());

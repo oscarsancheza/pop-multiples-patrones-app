@@ -5,6 +5,8 @@ import com.oscarsancz.biblioapp.helpers.BaseView;
 import com.oscarsancz.biblioapp.models.Usuarios.TipoUsuario;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 
+import java.util.List;
+
 public interface CambioTipoUsuarioContract {
 
     interface View extends BaseView<Presenter> {
@@ -12,5 +14,7 @@ public interface CambioTipoUsuarioContract {
 
     interface Presenter extends BasePresenter {
         boolean cambioUsuario(Usuario usuario, TipoUsuario nuevoTipo);
+        List<Usuario> getUsuarios();
+
     }
 }
