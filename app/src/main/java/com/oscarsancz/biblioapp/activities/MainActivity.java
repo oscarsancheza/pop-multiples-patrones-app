@@ -96,7 +96,8 @@ public class MainActivity extends AppCompatActivity
       ActivityUtils.createIntent(
               this, GeneralActivity.class, TITULO_PANTALLA_EXTRA, TipoPantalla.CAMBIAR_USUARIO.toString());
     } else if (id == R.id.nav_libro_resurtir) {
-
+      ActivityUtils.createIntent(
+              this, GeneralActivity.class, TITULO_PANTALLA_EXTRA, TipoPantalla.MOSTRAR_TITULO.toString());
     } else if (id == R.id.nav_configuracion) {
 
     }

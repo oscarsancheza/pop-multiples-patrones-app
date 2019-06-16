@@ -7,13 +7,19 @@ import io.realm.annotations.PrimaryKey;
 
 public class Solicitud extends RealmObject {
     @PrimaryKey private Long isbn;
+    private String titulo;
     private Date fecha;
 
     public Solicitud(){}
 
-    public Solicitud(Long isbn, Date fecha){
+    public Solicitud(Long isbn, String titulo, Date fecha){
+        this.titulo = titulo;
         this.isbn = isbn;
         this.fecha = fecha;
+    }
+
+    public String getTitulo() {
+        return titulo;
     }
 
     public Long getIsbn() {
@@ -22,6 +28,10 @@ public class Solicitud extends RealmObject {
 
     public Date getFecha() {
         return fecha;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public void setIsbn(Long isbn) {

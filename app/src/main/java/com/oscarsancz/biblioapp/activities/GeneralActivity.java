@@ -7,13 +7,16 @@ import android.support.v7.widget.Toolbar;
 import com.oscarsancz.biblioapp.R;
 import com.oscarsancz.biblioapp.fragments.CambioTipoUsuarioFragment;
 import com.oscarsancz.biblioapp.fragments.DevolverLibroFragment;
+import com.oscarsancz.biblioapp.fragments.MostrarResurtirFragment;
 import com.oscarsancz.biblioapp.fragments.PrestamoLibrosFragment;
 import com.oscarsancz.biblioapp.helpers.ActivityUtils;
 import com.oscarsancz.biblioapp.models.TipoPantalla;
 import com.oscarsancz.biblioapp.presenters.CambioTipoUsuarioPresenter;
 import com.oscarsancz.biblioapp.presenters.DevolverLibroPresenter;
+import com.oscarsancz.biblioapp.presenters.MostrarResurtirPresenter;
 import com.oscarsancz.biblioapp.presenters.PrestamoLibroPresenter;
 import com.oscarsancz.biblioapp.repositories.LibrosRepository;
+import com.oscarsancz.biblioapp.repositories.SolicitudRepository;
 import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
 
 import butterknife.BindView;
@@ -73,6 +76,16 @@ public class GeneralActivity extends AppCompatActivity {
                 ActivityUtils.replaceFragment(
                         getSupportFragmentManager(),
                         cambioTipoUsuarioFragment,
+                        R.id.content_main,
+                        tipoPantalla.toString());
+                break;
+            case MOSTRAR_TITULO:
+                MostrarResurtirFragment mostrarResurtirFragment = new MostrarResurtirFragment();
+                MostrarResurtirPresenter mostrarResurtirPresenter =
+                        new MostrarResurtirPresenter(SolicitudRepository.getInstance(), mostrarResurtirFragment, this);
+                ActivityUtils.replaceFragment(
+                        getSupportFragmentManager(),
+                        mostrarResurtirFragment,
                         R.id.content_main,
                         tipoPantalla.toString());
                 break;

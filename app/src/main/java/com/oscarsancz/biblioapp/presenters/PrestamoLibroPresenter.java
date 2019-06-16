@@ -3,6 +3,7 @@ package com.oscarsancz.biblioapp.presenters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.oscarsancz.biblioapp.CreadorSolicitudes.CrearSolicitud;
 import com.oscarsancz.biblioapp.Prestamo.Prestar;
 import com.oscarsancz.biblioapp.Prestamo.PrestarEstudiante;
 import com.oscarsancz.biblioapp.Prestamo.PrestarProfesor;
@@ -13,6 +14,7 @@ import com.oscarsancz.biblioapp.models.Libro.Libro;
 import com.oscarsancz.biblioapp.models.Usuarios.TipoUsuario;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 import com.oscarsancz.biblioapp.repositories.LibrosRepository;
+import com.oscarsancz.biblioapp.repositories.SolicitudRepository;
 import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import io.realm.RealmList;
 public class PrestamoLibroPresenter implements PrestamoLibroContract.Presenter {
     private UsuarioRepository usuarioRepository;
     private LibrosRepository librosRepository;
+    private CrearSolicitud crearSolicitud;
 
     public PrestamoLibroPresenter(
             @NonNull UsuarioRepository repository,
@@ -69,8 +72,11 @@ public class PrestamoLibroPresenter implements PrestamoLibroContract.Presenter {
 
     @Override
     public void cambiarEstatusLibro(List<Libro> libros) {
+        crearSolicitud = new CrearSolicitud(LibrosRepository.getInstance(), SolicitudRepository.getInstance());
+
         for (Libro item : libros) {
             item.setStatus(DisponibilidadLibro.PRESTADO);
+            crearSolicitud.crear(item);
             librosRepository.save(item);
         }
     }
