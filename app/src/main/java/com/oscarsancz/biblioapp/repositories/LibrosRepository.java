@@ -48,7 +48,8 @@ public class LibrosRepository extends GenericRepository<Libro> {
     List<Libro> libros = new ArrayList<>();
     try{
       RealmResults<Libro> results =
-              mRealm.where(Libro.class).equalTo("isbn", isbn).findAll();
+              mRealm.where(Libro.class).equalTo("isbn", isbn).equalTo("status", DisponibilidadLibro.DISPONIBLE.toString()).
+                      findAll();
       libros = mRealm.copyFromRealm(results);
 
     }catch (Exception e){

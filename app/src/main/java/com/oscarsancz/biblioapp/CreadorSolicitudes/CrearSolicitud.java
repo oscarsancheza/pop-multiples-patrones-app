@@ -22,6 +22,7 @@ public class CrearSolicitud {
         List<Libro> librosPrestados;
 
         librosPrestados = librosRepository.getAllByIsbn(libro.getIsbn());
+        System.out.println(librosPrestados.size());
         if(librosPrestados.size() <= 2){
             Solicitud solicitudResurtir = new Solicitud(libro.getIsbn(), libro.getTitulo(), new Date());
             solicitudRepository.save(solicitudResurtir);

@@ -76,8 +76,8 @@ public class PrestamoLibroPresenter implements PrestamoLibroContract.Presenter {
 
         for (Libro item : libros) {
             item.setStatus(DisponibilidadLibro.PRESTADO);
-            crearSolicitud.crear(item);
             librosRepository.save(item);
+            crearSolicitud.crear(item);
         }
     }
 }
