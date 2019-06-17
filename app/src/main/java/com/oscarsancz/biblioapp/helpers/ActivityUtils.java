@@ -37,4 +37,7 @@ public class ActivityUtils {
     intent.putExtra(tituloExtra, extra);
     context.startActivity(intent);
   }
+
+
+
 }

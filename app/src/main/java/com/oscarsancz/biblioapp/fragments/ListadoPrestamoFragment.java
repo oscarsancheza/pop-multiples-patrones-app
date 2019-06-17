@@ -13,16 +13,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.oscarsancz.biblioapp.R;
-import com.oscarsancz.biblioapp.adapters.DefaultAdapter;
 import com.oscarsancz.biblioapp.adapters.PrestamosAdapter;
 import com.oscarsancz.biblioapp.contracts.ListadoPrestamoContract;
 import com.oscarsancz.biblioapp.helpers.SimpleDividerItemDecoration;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
 
 @SuppressLint("ValidFragment")
 public class ListadoPrestamoFragment extends Fragment implements ListadoPrestamoContract.View {
@@ -32,7 +30,6 @@ public class ListadoPrestamoFragment extends Fragment implements ListadoPrestamo
 
   @BindView(R.id.empty_view)
   TextView textoEnVacio;
-
 
   private ListadoPrestamoContract.Presenter presenter;
   private RecyclerView.LayoutManager layoutManager;
@@ -49,43 +46,42 @@ public class ListadoPrestamoFragment extends Fragment implements ListadoPrestamo
     getActivity().setTitle(R.string.libros_prestados);
     ButterKnife.bind(this, view);
 
-    initRecyclerView();
     mostrarDatos();
 
     return view;
   }
 
-  private void mostrarDatos() {
-    List<Usuario> usuarios = presenter.getData();
+  public boolean hasData() {
+
+    boolean hasData = false;
+
+    if (adapter != null) {
+      hasData = adapter.getItemCount() > 0;
+    }
+
+    return hasData;
+  }
+
+  public void mostrarDatos() {
+    RealmResults<Usuario> usuarios = presenter.getData();
     if (usuarios == null || usuarios.isEmpty()) {
       recyclerView.setVisibility(View.GONE);
       textoEnVacio.setVisibility(View.VISIBLE);
     } else {
       recyclerView.setVisibility(View.VISIBLE);
       textoEnVacio.setVisibility(View.GONE);
-      adapter.addItems(usuarios);
+      initRecyclerView(usuarios);
     }
   }
 
-  private void initRecyclerView() {
+  private void initRecyclerView(RealmResults<Usuario> usuarios) {
     layoutManager = new LinearLayoutManager(getContext());
-    adapter = new PrestamosAdapter(getContext(), layoutManager, recyclerView);
+    adapter = new PrestamosAdapter(getActivity(), usuarios);
 
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.setAdapter(adapter);
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
-
-    adapter.addOnItemClickListener(
-        new DefaultAdapter.OnItemClickListener() {
-          @Override
-          public void onItemClick(int position, Object model) {}
-
-          @Override
-          public boolean onItemLongClick(int position, Object model) {
-            return false;
-          }
-        });
   }
 
   @Override

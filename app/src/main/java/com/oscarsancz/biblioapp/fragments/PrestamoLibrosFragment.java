@@ -1,7 +1,9 @@
 package com.oscarsancz.biblioapp.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -108,7 +110,13 @@ public class PrestamoLibrosFragment extends Fragment implements PrestamoLibroCon
       presenter.prestar(usuario);
       new AlertDialog.Builder(getContext())
           .setTitle("Atención")
-          .setPositiveButton("Aceptar", (dialogInterface, i) -> getActivity().finish())
+          .setPositiveButton(
+              "Aceptar",
+              (dialogInterface, i) -> {
+                Intent intentResult = getActivity().getIntent();
+                getActivity().setResult(Activity.RESULT_OK, intentResult);
+                getActivity().finish();
+              })
           .setMessage("Se realizó el prestamo con éxito.")
           .setCancelable(false)
           .show();
