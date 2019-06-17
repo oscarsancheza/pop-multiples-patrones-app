@@ -1,11 +1,14 @@
 package com.oscarsancz.biblioapp.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.oscarsancz.biblioapp.CreadorPresenters;
 import com.oscarsancz.biblioapp.R;
+import com.oscarsancz.biblioapp.SimpleFragmentFactory;
 import com.oscarsancz.biblioapp.fragments.CambioTipoUsuarioFragment;
 import com.oscarsancz.biblioapp.fragments.DevolverLibroFragment;
 import com.oscarsancz.biblioapp.fragments.MostrarResurtirFragment;
@@ -45,62 +48,9 @@ public class GeneralActivity extends AppCompatActivity {
     tipoPantalla =
         TipoPantalla.valueOf(getIntent().getStringExtra(MainActivity.TITULO_PANTALLA_EXTRA));
 
-    crearFragment(tipoPantalla);
-  }
-
-  private void crearFragment(TipoPantalla tipoPantalla) {
-    switch (tipoPantalla) {
-      case PRESTAMOS:
-        PrestamoLibrosFragment prestamoLibrosFragment = new PrestamoLibrosFragment();
-        PrestamoLibroPresenter presenter =
-            new PrestamoLibroPresenter(
-                UsuarioRepository.getInstance(),
-                LibrosRepository.getInstance(),
-                prestamoLibrosFragment,
-                this);
-        ActivityUtils.replaceFragment(
-            getSupportFragmentManager(),
-            prestamoLibrosFragment,
-            R.id.content_main,
-            tipoPantalla.toString());
-        break;
-      case DEVOLUCIONES:
-        DevolverLibroFragment devolverLibroFragment = new DevolverLibroFragment();
-        DevolverLibroPresenter presenterDevolver =
-            new DevolverLibroPresenter(
-                UsuarioRepository.getInstance(),
-                LibrosRepository.getInstance(),
-                devolverLibroFragment,
-                this);
-        ActivityUtils.replaceFragment(
-            getSupportFragmentManager(),
-            devolverLibroFragment,
-            R.id.content_main,
-            tipoPantalla.toString());
-        break;
-      case CAMBIAR_USUARIO:
-        CambioTipoUsuarioFragment cambioTipoUsuarioFragment = new CambioTipoUsuarioFragment();
-        CambioTipoUsuarioPresenter presenter1 =
-            new CambioTipoUsuarioPresenter(
-                UsuarioRepository.getInstance(), cambioTipoUsuarioFragment, this);
-        ActivityUtils.replaceFragment(
-            getSupportFragmentManager(),
-            cambioTipoUsuarioFragment,
-            R.id.content_main,
-            tipoPantalla.toString());
-        break;
-      case MOSTRAR_TITULO:
-        MostrarResurtirFragment mostrarResurtirFragment = new MostrarResurtirFragment();
-        MostrarResurtirPresenter mostrarResurtirPresenter =
-            new MostrarResurtirPresenter(
-                SolicitudRepository.getInstance(), mostrarResurtirFragment, this);
-        ActivityUtils.replaceFragment(
-            getSupportFragmentManager(),
-            mostrarResurtirFragment,
-            R.id.content_main,
-            tipoPantalla.toString());
-        break;
-    }
+    SimpleFragmentFactory simpleFragmentFactory = new SimpleFragmentFactory();
+    CreadorPresenters creadorPresenters = new CreadorPresenters(simpleFragmentFactory);
+    creadorPresenters.MostrarFragment(tipoPantalla, getSupportFragmentManager(), this);
   }
 
   @Override
