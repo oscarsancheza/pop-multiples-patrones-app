@@ -1,6 +1,9 @@
 package com.oscarsancz.biblioapp.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity
   private final String LISTADO_PRESTAMOS_TAG = "listadoPrestamos";
   InicializarBD inicializarBD;
   public static final String TITULO_PANTALLA_EXTRA = "tipopantalla";
+  public static final int ACTIVITY_CODE = 001;
+  private ListadoPrestamoFragment vista;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +63,7 @@ public class MainActivity extends AppCompatActivity
     toggle.syncState();
     navigationView.setNavigationItemSelectedListener(this);
 
-    ListadoPrestamoFragment vista = new ListadoPrestamoFragment();
+    vista = new ListadoPrestamoFragment();
 
     ActivityUtils.replaceFragment(
         getSupportFragmentManager(), vista, R.id.content_main, LISTADO_PRESTAMOS_TAG);
@@ -78,6 +83,15 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override
+  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    System.out.println(":" + requestCode + ":" + resultCode);
+    if (resultCode == Activity.RESULT_OK && vista != null && !vista.hasData()) {
+      vista.mostrarDatos();
+    }
+  }
+
+  @Override
   public boolean onNavigationItemSelected(MenuItem item) {
     // Handle navigation view item clicks here.
     int id = item.getItemId();
@@ -85,8 +99,9 @@ public class MainActivity extends AppCompatActivity
     if (id == R.id.nav_ini_sistema) {
       inicializarBD.inicializar();
     } else if (id == R.id.nav_prestar_libro) {
-      ActivityUtils.createIntent(
-          this, GeneralActivity.class, TITULO_PANTALLA_EXTRA, TipoPantalla.PRESTAMOS.toString());
+      Intent intent = new Intent(this, GeneralActivity.class);
+      intent.putExtra(TITULO_PANTALLA_EXTRA, TipoPantalla.PRESTAMOS.toString());
+      startActivityForResult(intent, ACTIVITY_CODE);
     } else if (id == R.id.nav_devolver_libro) {
       ActivityUtils.createIntent(
           this, GeneralActivity.class, TITULO_PANTALLA_EXTRA, TipoPantalla.DEVOLUCIONES.toString());
