@@ -18,12 +18,8 @@ import com.oscarsancz.biblioapp.contracts.ListadoPrestamoContract;
 import com.oscarsancz.biblioapp.helpers.SimpleDividerItemDecoration;
 import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.OrderedRealmCollection;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 @SuppressLint("ValidFragment")
@@ -55,7 +51,18 @@ public class ListadoPrestamoFragment extends Fragment implements ListadoPrestamo
     return view;
   }
 
-  private void mostrarDatos() {
+  public boolean hasData() {
+
+    boolean hasData = false;
+
+    if (adapter != null) {
+      hasData = adapter.getItemCount() > 0;
+    }
+
+    return hasData;
+  }
+
+  public void mostrarDatos() {
     RealmResults<Usuario> usuarios = presenter.getData();
     if (usuarios == null || usuarios.isEmpty()) {
       recyclerView.setVisibility(View.GONE);
