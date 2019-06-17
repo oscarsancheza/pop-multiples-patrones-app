@@ -1,27 +1,14 @@
 package com.oscarsancz.biblioapp.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.oscarsancz.biblioapp.CreadorPresenters;
+import com.oscarsancz.biblioapp.creador.CreadorPresenters;
 import com.oscarsancz.biblioapp.R;
-import com.oscarsancz.biblioapp.SimpleFragmentFactory;
-import com.oscarsancz.biblioapp.fragments.CambioTipoUsuarioFragment;
-import com.oscarsancz.biblioapp.fragments.DevolverLibroFragment;
-import com.oscarsancz.biblioapp.fragments.MostrarResurtirFragment;
-import com.oscarsancz.biblioapp.fragments.PrestamoLibrosFragment;
-import com.oscarsancz.biblioapp.helpers.ActivityUtils;
+import com.oscarsancz.biblioapp.creador.SimpleFragmentFactory;
 import com.oscarsancz.biblioapp.models.TipoPantalla;
-import com.oscarsancz.biblioapp.presenters.CambioTipoUsuarioPresenter;
-import com.oscarsancz.biblioapp.presenters.DevolverLibroPresenter;
-import com.oscarsancz.biblioapp.presenters.MostrarResurtirPresenter;
-import com.oscarsancz.biblioapp.presenters.PrestamoLibroPresenter;
-import com.oscarsancz.biblioapp.repositories.LibrosRepository;
-import com.oscarsancz.biblioapp.repositories.SolicitudRepository;
-import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

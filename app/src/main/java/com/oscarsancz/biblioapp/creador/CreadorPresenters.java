@@ -1,9 +1,10 @@
-package com.oscarsancz.biblioapp;
+package com.oscarsancz.biblioapp.creador;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import com.oscarsancz.biblioapp.R;
 import com.oscarsancz.biblioapp.fragments.CambioTipoUsuarioFragment;
 import com.oscarsancz.biblioapp.fragments.DevolverLibroFragment;
 import com.oscarsancz.biblioapp.fragments.MostrarResurtirFragment;
