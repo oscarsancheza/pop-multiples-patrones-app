@@ -6,11 +6,14 @@ import com.oscarsancz.biblioapp.models.Usuarios.Usuario;
 
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmResults;
+
 public interface ListadoPrestamoContract {
 
   interface View extends BaseView<Presenter> {}
 
   interface Presenter extends BasePresenter {
-    List<Usuario> getData();
+    RealmResults<Usuario> getData();
   }
 }

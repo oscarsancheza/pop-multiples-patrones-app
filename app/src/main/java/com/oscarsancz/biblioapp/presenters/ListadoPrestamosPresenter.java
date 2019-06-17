@@ -9,6 +9,9 @@ import com.oscarsancz.biblioapp.repositories.UsuarioRepository;
 
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmResults;
+
 public class ListadoPrestamosPresenter implements ListadoPrestamoContract.Presenter {
 
   private final ListadoPrestamoContract.View view;
@@ -27,7 +30,7 @@ public class ListadoPrestamosPresenter implements ListadoPrestamoContract.Presen
 
 
   @Override
-  public List<Usuario> getData() {
+  public RealmResults<Usuario> getData() {
     return repository.getAllWithBooks();
   }
 }
