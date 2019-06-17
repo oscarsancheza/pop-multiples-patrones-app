@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.oscarsancz.biblioapp.R;
-import com.oscarsancz.biblioapp.fragments.DialogFragmentMultipleChoice;
 import com.oscarsancz.biblioapp.fragments.ListadoPrestamoFragment;
 import com.oscarsancz.biblioapp.helpers.ActivityUtils;
 import com.oscarsancz.biblioapp.models.TipoPantalla;
@@ -78,7 +77,6 @@ public class MainActivity extends AppCompatActivity
     }
   }
 
-  @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
     // Handle navigation view item clicks here.
@@ -99,7 +97,11 @@ public class MainActivity extends AppCompatActivity
           TITULO_PANTALLA_EXTRA,
           TipoPantalla.CAMBIAR_USUARIO.toString());
     } else if (id == R.id.nav_libro_resurtir) {
-
+      ActivityUtils.createIntent(
+          this,
+          GeneralActivity.class,
+          TITULO_PANTALLA_EXTRA,
+          TipoPantalla.MOSTRAR_TITULO.toString());
     }
 
     DrawerLayout drawer = findViewById(R.id.drawer_layout);
